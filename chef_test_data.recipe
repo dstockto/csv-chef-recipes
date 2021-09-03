@@ -1,0 +1,40 @@
+# This recipe will work with csv-chef's randomly generated data from the
+# write command. It uppercases the first name, lower cases the last name. It
+# also maps the political party abbreviations to their full names. It 
+# transforms the sent column based on the date, so if the date is in the 
+# past the value will be changed to SENT. It adds a new fullname column by
+# combining the first and last names. It also creates a variable 
+# representing username by combining the first letter of the first name
+# with the last name, and removing any apostrophes, and lowercasing all of 
+# that. It then adds that username to a new column. It uses that to build
+# an email address using the username along with the last 4 digits of the 
+# "voter id" and tacking on "@gmail.com". It's all just for fun.
+#
+#
+!1 <- 1
+1 <- 1
+!2 <- 2
+2 <- 2 -> uppercase
+!3 <- 3
+3 <- 3 -> lowercase
+!4 <- 4
+4 <- 4
+!5 <- 5
+5 <- 5
+!6 <- 6
+6 <- 6
+!7 <- 7
+7 <- 7
+!8 <- 8
+8 <- 8
+!9 <- 9
+9 <- 9 -> change("DEM", "democrat") -> changei("rep", "republican") -> changei("grn", "green") -> changei("ind", "independent")
+!10 <- 10
+10 <- 10 -> readDate("2006-01-02") -> isPast("SENT", ?, ?) -> formatDate("2006-01-02")
+!11 <- "fullname"
+11 <- 2 + " " + 3
+!12 <- "username"
+$username <- firstchars("1", 2) + 3 -> replace("'", "") -> lowercase
+12 <- $username
+!13 <- "email"
+13 <- $username + lastchars("4",1) + "@gmail.com"
