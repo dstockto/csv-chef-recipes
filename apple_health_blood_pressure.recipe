@@ -1,0 +1,18 @@
+# Transform QS Access blood pressure CSV dump to something more readable
+# The format I get is:
+#
+# start date, finish date, diastolic, systolic
+# 04-Aug-2021, 04-Aug-2021, 80.0, 120.0
+#
+# This recipe transforms that to:
+# 
+# date, blood pressure
+# 08/04/2021, 120/80
+#
+# Spaces in CSV examples added above for human readability
+#
+#
+!1 <- "date"
+1 <- 1 -> readDate("02-Jan-2006 15:04")->formatDate("01/02/2006")
+!2 <- "blood pressure"
+2 <- numberformat("0", 4) + "/" + numberformat("0",3)
